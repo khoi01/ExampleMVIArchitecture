@@ -32,7 +32,7 @@ abstract class NetworkBoundResource <ResponseObject,ViewStateType>{
     private fun handleNetWorkCall(response: GenericApiResponse<ResponseObject>) {
         when(response){
             is ApiSuccessResponse -> {
-                handleNetWorkCall(response)
+                handleApiSuccessResponse(response)
             }
             is ApiErrorResponse -> {
                 // Handle Error?

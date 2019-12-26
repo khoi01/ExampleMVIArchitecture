@@ -1,5 +1,6 @@
 package com.codingwithmitch.mviexample.ui.main
 
+import android.content.Context
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -7,11 +8,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.codingwithmitch.mviexample.R
 import com.codingwithmitch.mviexample.ui.main.state.MainStateEvent
+import java.lang.ClassCastException
 
 class MainFragment: Fragment(){
 
     lateinit var  viewModel:MainViewModel
-
+    lateinit var dataStateHandler:DataStateListener
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_main,container,false);
     }
@@ -29,10 +31,22 @@ class MainFragment: Fragment(){
         subscribeObservers()
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        try{
+            dataStateHandler = context as DataStateListener
+        }catch (e:ClassCastException){
+            println("Debug: $context must implement DataStateListener")
+        }
+    }
+
     fun subscribeObservers(){
 
         viewModel.dataState.observe(viewLifecycleOwner, Observer { dataState ->
             println("Debug Datastate: ${dataState}")
+
+            //handle loading and message
+            dataStateHandler.onDataStageChange(dataState)
 
             //Handle Data<T>
             dataState.data?.let { mainViewState ->
@@ -47,14 +61,7 @@ class MainFragment: Fragment(){
                 }
             }
 
-            //Handle Error
-            dataState.message?.let {
 
-            }
-            //Handle Loading
-            dataState.loading?.let {
-
-            }
 
         })
 
