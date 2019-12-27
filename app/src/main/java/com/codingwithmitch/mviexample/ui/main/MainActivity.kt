@@ -42,8 +42,12 @@ class MainActivity : AppCompatActivity(),
             //handle loading
             showProgressBar(it.loading)
             //handle messsage
-            it.message?.let {message ->
-                showToast(message)
+            it.message?.let {event ->
+
+               event.getContentIfNotHandled()?.let { message ->
+                   showToast(message)
+               }
+
             }
         }
     }
