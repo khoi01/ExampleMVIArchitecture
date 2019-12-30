@@ -1,14 +1,12 @@
 package com.codingwithmitch.mviexample.util
-//Event Wrapper - want to be observe 1 time - no observer during ror
+//Event Wrapper - want to be observe 1 time - no observer during rotation
 data class DataState<T>(
     var message:Event<String>? = null,
     var loading:Boolean = false,
     var data:Event<T>? = null
 ){
     companion object {
-        fun <T> error(
-            message: String
-        ): DataState<T> {
+        fun <T> error(message: String): DataState<T> {
             return DataState(
                 message = Event(message),
                 loading = false,
@@ -16,9 +14,7 @@ data class DataState<T>(
             )
         }
 
-        fun <T> loading(
-            isLoading: Boolean
-        ): DataState<T> {
+        fun <T> loading(isLoading: Boolean): DataState<T> {
             return DataState(
                 message = null,
                 loading = isLoading,
@@ -26,10 +22,7 @@ data class DataState<T>(
             )
         }
 
-        fun <T> data(
-            message: String? = null,
-            data: T? = null
-        ):DataState<T>{
+        fun <T> data(message: String? = null,data: T? = null):DataState<T>{
             return DataState(
                 message = Event.messageEvent(message),
                 loading = false,

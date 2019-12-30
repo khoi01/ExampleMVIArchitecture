@@ -14,15 +14,18 @@ import kotlinx.coroutines.withContext
 
 abstract class NetworkBoundResource <ResponseObject,ViewStateType>{
     protected  val result = MediatorLiveData<DataState<ViewStateType>>()
+
+
     init{
         result.value = DataState.loading(true)
 
         GlobalScope.launch(IO){
             delay(TESTING_NETWORK_DELAY)
             withContext(Main){
+                //(6)
                 val apiResponse = createCall()
                 result.addSource(apiResponse){response ->
-                    result.removeSource(apiResponse)
+                    result.removeSource(apiResponse) //(7)
                     handleNetWorkCall(response)
                 }
             }
@@ -31,7 +34,9 @@ abstract class NetworkBoundResource <ResponseObject,ViewStateType>{
 
     private fun handleNetWorkCall(response: GenericApiResponse<ResponseObject>) {
         when(response){
+            //(8)
             is ApiSuccessResponse -> {
+
                 handleApiSuccessResponse(response)
             }
             is ApiErrorResponse -> {

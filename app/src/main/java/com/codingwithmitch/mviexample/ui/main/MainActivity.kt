@@ -10,7 +10,7 @@ import com.codingwithmitch.mviexample.util.DataState
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(),
-        DataStateListener
+    DataStateListener
 {
 
     lateinit var viewModel:MainViewModel

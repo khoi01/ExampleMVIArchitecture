@@ -28,10 +28,12 @@ object Repository{
      }.asLiveData()
     }
 
+    //(4)
     fun getUser(userId:String): LiveData<DataState<MainViewState>>{
         return object :NetworkBoundResource<User,MainViewState>(){
             override fun handleApiSuccessResponse(response: ApiSuccessResponse<User>) {
                 result.value = DataState.data(
+                    //9
                     data = MainViewState(
                         user =  response.body
                     )
