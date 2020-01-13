@@ -11,6 +11,9 @@ import com.codingwithmitch.mviexample.R
 import com.codingwithmitch.mviexample.model.BlogPost
 import kotlinx.android.synthetic.main.layout_blog_list_item.view.*
 
+
+//RECYCLERVIEW ADAPTER TEMPLETE - https://gist.github.com/mitchtabian/e194485eee68a7846feb27f1ce1067b3
+
 class BlogListAdapter(private val interaction: Interaction? = null) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

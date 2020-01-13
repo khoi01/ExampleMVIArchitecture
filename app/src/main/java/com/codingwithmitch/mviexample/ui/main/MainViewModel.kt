@@ -49,7 +49,6 @@ class MainViewModel :ViewModel(){
         val update = getCurrentViewStateOrNew()
         update.blogPosts = blogPost
         _viewState.value = update
-        _viewState.value = update
     }
 
     //(6)(11)

@@ -8,11 +8,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.codingwithmitch.mviexample.R
 import com.codingwithmitch.mviexample.model.BlogPost
+import com.codingwithmitch.mviexample.model.User
 import com.codingwithmitch.mviexample.ui.main.state.MainStateEvent
 import com.codingwithmitch.mviexample.util.TopSpacingItemDecoration
 import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.android.synthetic.main.layout_blog_list_item.*
 import java.lang.ClassCastException
 
 class MainFragment: Fragment(),BlogListAdapter.Interaction{
@@ -96,6 +99,7 @@ class MainFragment: Fragment(),BlogListAdapter.Interaction{
 
             viewState.user?.let{
                 print("Debug: Setting user data: ${it}")
+                setUserProperties(it)
             }
         })
 
@@ -113,6 +117,17 @@ class MainFragment: Fragment(),BlogListAdapter.Interaction{
 
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun setUserProperties(user:User){
+        email.text = user.email
+        username.text = user.username
+
+        view?.let{
+            Glide.with(it.context)
+                .load(user.image)
+                .into(image)
+        }
     }
 
     private fun triggerGetBlogsEvent() {
